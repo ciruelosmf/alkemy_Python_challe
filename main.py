@@ -5,26 +5,63 @@ engine = create_engine('sqlite://', echo=False)
 
 
 
+
+
+    #######################################
+###########   DF museos     #################
+    #######################################
+
 data_frame_museos = pd.read_csv('museos_datosabiertos.csv', header = 0, usecols = ['Cod_Loc', 'IdProvincia', 'IdDepartamento', 'categoria', 'provincia', 'localidad', 'nombre', 'direccion', 'CP',  'telefono', 'Mail', 'Web']) 
 
 
 
+# renombrar las columnas par anomrlalizar al momento de concat()
+data_frame_museos.rename(columns = {'Cod_Loc':'cod_localidad', 'IdProvincia':'id_provincia', 'IdDepartamento': 'id_departamento', 'categoria':'categoría', 'provincia':'provincia', 'localidad':'localidad', 'nombre':'nombre', 'direccion':'domicilio', 'CP':'código_postal', 'telefono':'número_teléfono', 'Mail':'mail', 'Web':'web'}, inplace = True)
 
 
+
+
+
+
+
+
+
+
+
+
+    #######################################
+###########   DF cines     #################
+    #######################################
 
 data_frame_cines = pd.read_csv('cine.csv', header = 0) 
 
 data_frame_cines = pd.read_csv('cine.csv', header = 0, usecols = ['Cod_Loc', 'IdProvincia', 'IdDepartamento', 
        'Categoría', 'Provincia', 'Localidad', 'Nombre', 'Dirección', 'CP',  'Teléfono', 'Mail', 'Web']) 
 
+data_frame_cines.rename(columns = {'Cod_Loc':'cod_localidad', 'IdProvincia':'id_provincia', 'IdDepartamento': 'id_departamento', 'Categoría':'categoría', 'Provincia':'provincia', 'Localidad':'localidad', 'Nombre':'nombre', 'Dirección':'domicilio', 'CP':'código_postal', 'Teléfono':'número_teléfono', 'Mail':'mail', 'Web':'web'}, inplace = True)
 
 
 
 
+
+
+
+
+
+
+    #######################################
+###########   DF bibliotecas     #################
+    #######################################
 
 data_frame_bibliotecas = pd.read_csv('biblioteca_popular.csv', header = 0) 
 
 data_frame_bibliotecas = pd.read_csv('biblioteca_popular.csv', header = 0, usecols = ['Cod_Loc', 'IdProvincia', 'IdDepartamento', 'Categoría', 'Provincia', 'Localidad', 'Nombre', 'Domicilio', 'CP',  'Teléfono', 'Mail', 'Web']) 
+
+# renombrar las columnas par anomrlalizar al momento de concat()
+data_frame_bibliotecas.rename(columns = {'Cod_Loc':'cod_localidad', 'IdProvincia':'id_provincia', 'IdDepartamento': 'id_departamento', 'Categoría':'categoría', 'Provincia':'provincia', 'Localidad':'localidad', 'Nombre':'nombre', 'Domicilio':'domicilio', 'CP':'código_postal', 'Teléfono':'número_teléfono', 'Mail':'mail', 'Web':'web'}, inplace = True)
+
+
+
 
 
 
@@ -33,18 +70,17 @@ data_frame_bibliotecas = pd.read_csv('biblioteca_popular.csv', header = 0, useco
 
 
 dataFrame_1_normalizado = pd.concat([data_frame_museos, data_frame_cines], axis = 0)
-
- 
+dataFrame_2_normalizado = pd.concat([dataFrame_1_normalizado, data_frame_bibliotecas], axis = 0)
 
   
-print(dataFrame_1_normalizado.head(10))
+print(dataFrame_2_normalizado.head(10))
 print("-1- ")
-print(dataFrame_1_normalizado.tail(10))
+print(dataFrame_2_normalizado.tail(10))
 print("-2- ")
-print(data_frame_bibliotecas.columns)
+print(dataFrame_2_normalizado.columns)
 #print(data_frame_bibliotecas)
 
-dataFrame_1_normalizado.to_csv('./dataFrame_1_normalizado.csv', index=False)
+dataFrame_2_normalizado.to_csv('./dataFrame_2_normalizado.csv', index=False)
  
 
 print("--- ")
@@ -68,18 +104,18 @@ print("--- ")
 
 
 
-Cod_Loc
-IdProvincia
-IdDepartamento
-categoria
+cod_localidad
+id_provincia
+id_departamento
+categoría
 provincia
 localidad
 nombre
-direccion
-CP
-telefono
-Mail
-Web
+domicilio
+código_postal
+número_teléfono
+mail
+web
 
 
 
